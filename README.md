@@ -3,7 +3,7 @@
 Application d'entraînement au QCM du concours des IRA (instituts régionaux d'administration), qui fonctionne sans connexion et sans installation.
 
 - 928 questions des annales officielles corrigées (sessions 2020-2 à 2024)
-- 239 questions sur le système éducatif français (QCM des fiches de révision et questions complémentaires tirées de leur contenu, avec explications)
+- 279 questions sur le système éducatif français, fiches 1 à 15 (QCM des fiches de révision et questions complémentaires tirées de leur contenu, avec explications)
 - Révision espacée (séance du jour), entraînement ciblé, examens blancs chronométrés au barème officiel (+1 / -0,5 / 0), reprise des erreurs, série sans faute
 - Les questions identiques ou très proches d'une annale à l'autre ne tombent jamais dans la même séance
 
