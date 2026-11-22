@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QCM IRA - entraînement</title>
+<style>
+/* VOICE: calme, studieux, précis - un carnet de révision sérieux.
+   IDEA: la copie d'annale corrigée : papier blanc, encre noire, cadre rouge du correcteur autour de la bonne lettre.
+   PICTURE: la question elle-même, posée comme sur le sujet, avec la grille A/B/C et le cadre rouge qui se dessine.
+   COLOUR and TYPE: papier blanc, encre #15171c, rouge correcteur #d3202a, bleu stylo #1f4fa8 pour tes choix ; Source Serif 4 pour les énoncés, Inter pour l'interface.
+   LAYOUT: tableau de bord en haut (séance du jour en grand), modes et progression dessous ; en séance, une seule colonne centrée. */
+:root{color-scheme:light dark;--bg:light-dark(#f4f3ef,#121418);--paper:light-dark(#fff,#1b1e24);--ink:light-dark(#15171c,#e9e8e4);--mute:light-dark(#5d6169,#9da1a9);--rule:light-dark(#e2e0da,#2c3038);--red:light-dark(#d3202a,#ff5a5f);--blue:light-dark(#1f4fa8,#7aa7ff);--ok:light-dark(#1d7a4c,#5fd394);--soft:light-dark(#f8f7f3,#16191e)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:980px;margin:0 auto;padding:clamp(18px,3vw,40px) max(4vw,14px) 60px}
+h1{font:600 clamp(26px,4vw,36px)/1.08 "Source Serif 4",Georgia,serif;margin:0;text-wrap:balance}
+h2{font:600 20px/1.2 Inter,sans-serif;margin:0 0 12px}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.sub{color:var(--mute);font-size:14px;margin-top:6px}
+.sync{font-size:13px;color:var(--mute)}
+.paper{background:var(--paper);border:1px solid var(--rule);border-radius:6px;padding:clamp(18px,3vw,32px);box-shadow:0 1px 0 var(--rule),0 12px 30px -24px rgba(0,0,0,.35)}
+.hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:center}
+.big{font:600 clamp(44px,7vw,64px)/1 "Source Serif 4",serif}
+.big small{font:500 16px Inter;color:var(--mute);margin-left:6px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+button,select,input{font:inherit;color:inherit}
+.btn{min-height:44px;padding:10px 18px;border-radius:6px;border:1px solid var(--rule);background:var(--paper);cursor:pointer;font-weight:600}
+.btn:hover{border-color:var(--ink)}
+.btn.main{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn.red{background:var(--red);border-color:var(--red);color:#fff}
+.btn:disabled{opacity:.45;cursor:default}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.grid3{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:18px}
+@media(max-width:900px){.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.goal{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center}
+.goal .big{color:var(--red)}
+.lost{margin:6px 0 0;padding:0;list-style:none;font-size:15px}.lost li{padding:4px 0;border-bottom:1px solid var(--rule)}
+.mode{text-align:left;padding:18px;border-radius:6px;border:1px solid var(--rule);background:var(--paper);cursor:pointer;min-height:120px}
+.mode:hover{border-color:var(--ink)}
+.mode b{display:block;font-size:17px;margin-bottom:4px}.mode span{color:var(--mute);font-size:14px}
+.sec{margin-top:26px}
+.bar{height:10px;background:var(--soft);border:1px solid var(--rule);border-radius:5px;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.secrow{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,2fr) 4.5em;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.secrow .n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.days{display:flex;gap:4px;align-items:flex-end;height:70px;margin-top:8px}
+.days div{flex:1;background:var(--blue);border-radius:2px 2px 0 0;min-height:2px;opacity:.85}
+.days div.z{background:var(--rule)}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+label.f{display:block;font-size:14px;color:var(--mute);margin:10px 0 4px}
+select,input[type=number],input[type=date],textarea{min-height:44px;padding:8px 10px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);font-size:16px;width:100%}
+textarea{font:13px/1.4 ui-monospace,monospace;min-height:90px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{min-height:40px;padding:6px 12px;border:1px solid var(--rule);border-radius:20px;background:var(--paper);cursor:pointer;font-size:14px}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+/* séance */
+.qhead{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--mute);margin-bottom:14px}
+.prog{height:4px;background:var(--rule);border-radius:2px;margin:0 0 18px;overflow:hidden}.prog i{display:block;height:100%;background:var(--ink);transition:width .3s}
+.qtext{font:400 clamp(19px,2.4vw,22px)/1.45 "Source Serif 4",serif;margin:0 0 20px}
+.opt{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;width:100%;text-align:left;padding:12px 12px;margin:0 0 8px;border:1px solid var(--rule);border-radius:6px;background:var(--paper);cursor:pointer;font-size:16px;line-height:1.45}
+.opt:hover:not(:disabled){border-color:var(--ink)}
+.opt .l{position:relative;width:34px;height:30px;display:grid;place-items:center;font-weight:700}
+.opt .l svg{position:absolute;inset:-3px;width:40px;height:36px;overflow:visible}
+.opt .l rect{fill:none;stroke:var(--red);stroke-width:2.6;stroke-dasharray:140;stroke-dashoffset:140;animation:draw .45s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.opt.pick{border-color:var(--blue);box-shadow:inset 3px 0 0 var(--blue)}
+.opt.good{border-color:var(--red)}
+.opt.bad .t{text-decoration:line-through;text-decoration-color:var(--blue);color:var(--mute)}
+.opt:disabled{cursor:default;color:inherit}
+.verdict{margin:14px 0 0;font-weight:600}
+.verdict.ok{color:var(--ok)}.verdict.ko{color:var(--red)}
+.note{font-size:13px;color:var(--mute);margin-top:10px}
+.foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px}
+.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:5px;margin-top:14px}
+.navgrid button{min-height:34px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);font-size:12px;cursor:pointer}
+.navgrid button.a{background:var(--blue);color:#fff;border-color:var(--blue)}
+.navgrid button.cur{outline:2px solid var(--ink)}
+.timer{font:600 18px Inter;font-variant-numeric:tabular-nums}
+.res{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+.res div{border:1px solid var(--rule);border-radius:6px;padding:12px}.res b{display:block;font:600 26px "Source Serif 4",serif}
+.res span{font-size:13px;color:var(--mute)}
+.rev{border-top:1px solid var(--rule);padding:14px 0}
+.rev p{margin:0 0 6px}.rev .c{color:var(--red);font-weight:600}.rev .y{color:var(--blue)}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:7px 6px;border-bottom:1px solid var(--rule);text-align:left}td.n{text-align:right;font-variant-numeric:tabular-nums}
+.hide{display:none!important}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:6px;font-size:14px;z-index:9}
+@media(max-width:700px){.hero,.two{grid-template-columns:minmax(0,1fr)}.grid3{grid-template-columns:minmax(0,1fr)}.res{grid-template-columns:repeat(2,minmax(0,1fr))}.secrow{grid-template-columns:minmax(0,1fr) 4em}.secrow .bar{grid-column:1/-1;order:3}}
+@media(prefers-reduced-motion:reduce){.opt .l rect{animation:none;stroke-dashoffset:0}.prog i{transition:none}}
+</style>
+</head>
+<body>
+<script src="questions.js"></script>
+<div class="wrap">
+  <div class="top">
+    <div><h1>QCM des IRA, entraînement</h1><div class="sub" id="bankinfo">Chargement des annales…</div></div>
+    <div class="sync" id="sync">Progression : connexion…</div>
+  </div>
+
+  <!-- ACCUEIL -->
+  <section id="vHome" class="hide">
+    <div class="paper hero">
+      <div>
+        <div class="sub" style="margin:0 0 6px">Séance du jour</div>
+        <div class="big" id="dueBig">0<small>questions</small></div>
+        <p id="dueTxt" style="margin:10px 0 16px"></p>
+        <div class="row"><button class="btn main" id="goDaily">Commencer la séance</button><span class="sub" id="streak" style="margin:0"></span></div>
+      </div>
+      <div>
+        <div class="sub" style="margin:0 0 8px">Maîtrise globale</div>
+        <div class="bar" id="gBar" style="height:14px"></div>
+        <div class="legend"><span><i style="background:var(--ok)"></i>maîtrisées</span><span><i style="background:var(--blue)"></i>en cours</span><span><i style="background:var(--red)"></i>à reprendre</span><span><i style="background:var(--rule)"></i>jamais vues</span></div>
+        <p class="sub" id="gTxt"></p>
+        <p class="sub" id="countdown"></p>
+      </div>
+    </div>
+
+    <div class="grid3">
+      <button class="mode" id="mTarget"><b>Entraînement ciblé</b><span>Choisis une matière et une session, avec correction immédiate.</span></button>
+      <button class="mode" id="mExam"><b>Examen blanc</b><span>Conditions réelles : 1 h 30, barème +1 / -0,5 / 0, correction à la fin.</span></button>
+      <button class="mode" id="mErr"><b>Mes erreurs</b><span id="errTxt">Les questions ratées, jusqu'à ce qu'elles tiennent.</span></button>
+      <button class="mode" id="mSf"><b>Série sans faute</b><span id="sfTxt">Le plus de bonnes réponses d'affilée : la série s'arrête à la première erreur.</span></button>
+    </div>
+
+    <div class="paper sec goal">
+      <div><div class="sub" style="margin:0 0 4px">Objectif</div><div class="big">20/20</div></div>
+      <div>
+        <p style="margin:0 0 6px" id="goalTxt"></p>
+        <ul class="lost" id="goalList"></ul>
+      </div>
+    </div>
+
+    <div class="paper sec" id="cfgTarget" hidden>
+      <h2>Entraînement ciblé</h2>
+      <label class="f">Matières</label><div class="chips" id="tSec"></div>
+      <label class="f">Annales et fiches</label><div class="chips" id="tYear"></div>
+      <div class="two">
+        <div><label class="f" for="tFilter">Questions</label><select id="tFilter"><option value="all">Toutes</option><option value="new">Jamais vues</option><option value="weak">Fragiles (ratées ou peu sûres)</option><option value="flag">Marquées</option></select></div>
+        <div><label class="f" for="tN">Nombre</label><select id="tN"><option>10</option><option selected>20</option><option>40</option><option value="999">Toutes</option></select></div>
+      </div>
+      <div class="row" style="margin-top:14px"><button class="btn main" id="goTarget">Lancer</button><span class="sub" id="tCount" style="margin:0"></span></div>
+    </div>
+
+    <div class="paper sec" id="cfgExam" hidden>
+      <h2>Examen blanc</h2>
+      <label class="f" for="eSrc">Sujet</label>
+      <select id="eSrc"></select>
+      <p class="note">Seules les questions auxquelles tu réponds (ou que tu passes explicitement) entrent dans ta progression ; celles laissées blanches comptent 0 dans la note. Le sujet mixte reprend la répartition de 2024 : 49 questions de culture administrative et juridique, 20 de finances publiques, 20 sur l'Europe, 19 de culture numérique, tirées dans toutes les annales.</p>
+      <div class="row" style="margin-top:10px"><button class="btn red" id="goExam">Démarrer le chrono</button></div>
+    </div>
+
+    <div class="two sec">
+      <div class="paper"><h2>Par matière</h2><div id="secRows"></div></div>
+      <div class="paper"><h2>14 derniers jours</h2><div class="days" id="days"></div><p class="sub" id="daysTxt"></p>
+        <h2 style="margin-top:20px">Examens blancs</h2><div id="exHist" class="sub">Aucun pour l'instant.</div></div>
+    </div>
+
+    <p class="note" id="bkWarn" style="color:var(--red)"></p>
+    <details class="paper sec" id="bkDet"><summary style="cursor:pointer;font-weight:600">Réglages et sauvegarde</summary>
+      <div class="two">
+        <div><label class="f" for="sNew">Nouvelles questions par jour</label><select id="sNew"><option>10</option><option>20</option><option selected>30</option><option>40</option><option>60</option></select></div>
+        <div><label class="f" for="sDate">Date de ton épreuve écrite</label><input type="date" id="sDate"></div>
+      </div>
+      <p class="note">Révision espacée : une question réussie revient après 1, 3, 7, 14 puis 30 jours ; une question ratée ou passée revient le lendemain et une fois en fin de séance. Une question ratée est reposée jusqu'à 3 fois dans la même séance, quelques questions plus loin. Une question est « maîtrisée » à partir du 4e succès d'affilée (exigence du 20/20). Les questions identiques d'une annale à l'autre partagent leur progression, et deux questions sur la même notion ne tombent jamais dans la même séance.</p>
+      <label class="f" for="bk">Copie de sauvegarde (copier pour garder, coller puis Importer pour restaurer)</label>
+      <textarea id="bk" spellcheck="false"></textarea>
+      <div class="row" style="margin-top:8px"><button class="btn" id="bkCopy">Copier ma progression</button><button class="btn" id="bkImp">Importer</button><button class="btn" id="bkReset">Tout remettre à zéro</button></div>
+      <div class="row" style="margin-top:8px"><button class="btn main" id="bkFile">Enregistrer une sauvegarde (fichier)</button><label class="btn" style="display:inline-flex;align-items:center">Restaurer depuis un fichier<input type="file" id="bkIn" accept=".json,application/json" hidden></label></div>
+      <p class="note" id="bkNote"></p>
+    </details>
+    <p class="note">Sources : sujets et corrigés officiels du QCM des IRA (sessions 2020-2 à 2024) ; fiches de révision « Le système éducatif français » (QCM des fiches et questions complémentaires tirées de leur contenu). Les réponses valent à la date de chaque épreuve ; certaines (titulaires de postes, chiffres budgétaires, présidences) ont pu changer depuis.</p>
+  </section>
+
+  <!-- SEANCE -->
+  <section id="vQuiz" class="hide">
+    <div class="qhead"><span id="qMeta"></span><span><span id="qPos"></span> · <span class="timer" id="qTimer"></span></span></div>
+    <div class="prog"><i id="qProg"></i></div>
+    <div class="paper">
+      <p class="qtext" id="qText"></p>
+      <div id="qOpts"></div>
+      <div id="qVerdict"></div>
+      <div class="foot">
+        <div class="row"><button class="btn" id="qSkip">Je ne sais pas</button><button class="btn" id="qFlag" aria-pressed="false">Marquer</button></div>
+        <div class="row"><button class="btn" id="qPrev">Précédente</button><button class="btn main" id="qNext">Suivante</button></div>
+      </div>
+      <p class="note">Clavier : A, B, C, D (ou 1, 2, 3, 4) pour répondre, 0 pour « je ne sais pas », Entrée pour continuer.</p>
+      <div class="navgrid hide" id="qNav"></div>
+    </div>
+    <div class="row" style="margin-top:14px;justify-content:space-between"><button class="btn" id="qQuit">Quitter</button><button class="btn red hide" id="qSubmit">Rendre la copie</button></div>
+  </section>
+
+  <!-- RESULTATS -->
+  <section id="vRes" class="hide">
+    <div class="paper">
+      <h2 id="rTitle">Résultat</h2>
+      <div class="res" id="rStats"></div>
+      <div id="rSecs"></div>
+      <div class="row" style="margin-top:14px"><button class="btn main" id="rHome">Retour à l'accueil</button><button class="btn" id="rRedo">Refaire les erreurs</button></div>
+      <h2 style="margin-top:26px">Correction</h2>
+      <div id="rList"></div>
+    </div>
+  </section>
+</div>
+<div class="toast hide" id="toast"></div>
+
+<script>
+{
+const SEC={jur:'Culture administrative et juridique',fin:'Finances publiques',ue:'Institutions européennes',num:'Culture numérique',edu:'Système éducatif'};
+const L4='ABCD';
+const src=q=>q.y.startsWith('Fiche')?`${q.y} · ${q.f||''}`:`Session ${q.y}`;
+const SECS=Object.keys(SEC);
+const INT=[1,1,3,7,14,30];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const today=()=>{const d=new Date();return Math.floor((d-d.getTimezoneOffset()*6e4)/864e5)};
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+let Q=[],BY={},YEARS=[],TWINS={};
+const gk=q=>q.g||q.id;
+function uniq(list,seen){seen=seen||new Set();return list.filter(q=>{const k=gk(q);if(seen.has(k))return false;seen.add(k);return true})}
+let S={st:{},log:{},ex:[],flag:{},best:0,cfg:{nw:30,date:''}};
+let dbRef=null,dirty=false,saving=false,saveT=null;
+
+function toast(m){const t=$('toast');t.textContent=m;t.classList.remove('hide');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.add('hide'),2200)}
+function lsGet(){try{return JSON.parse(localStorage.getItem('iraqcm')||'null')}catch(e){return null}}
+function lsSet(){try{localStorage.setItem('iraqcm',JSON.stringify(S))}catch(e){}}
+function merge(x){if(!x||typeof x!=='object')return;S={st:x.st||{},log:x.log||{},ex:x.ex||[],flag:x.flag||{},best:x.best||0,cfg:Object.assign({nw:30,date:''},x.cfg||{})}}
+function save(){dirty=true;lsSet();clearTimeout(saveT);saveT=setTimeout(flush,2500)}
+async function flush(){if(!dbRef||!dirty||saving)return;saving=true;dirty=false;
+  try{await dbRef.set(JSON.parse(JSON.stringify(S)));$('sync').textContent='Progression enregistrée dans ton compte'}
+  catch(e){dirty=true;$('sync').textContent='Enregistrement en ligne impossible, sauvegarde locale seulement'}
+  saving=false;if(dirty)saveT=setTimeout(flush,2500)}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flush()});
+
+async function initDb(){
+  const fallback=m=>{$('sync').textContent=m;const l=lsGet();if(l&&!Object.keys(S.st).length){merge(l);renderHome()}};
+  if(!window.claude||!claude.use){fallback('Progression enregistrée dans ce navigateur');return}
+  const timer=setTimeout(()=>fallback('Compte injoignable pour l\'instant, progression gardée dans ce navigateur'),10000);
+  try{
+    const [db,user]=await Promise.all([claude.use('db'),claude.use('user')]);
+    const id=user&&await user.id();
+    if(!db||!id){clearTimeout(timer);fallback('Progression gardée dans ce navigateur');return}
+    dbRef=db.collection('data/users/'+id).doc('progress');
+    const snap=await dbRef.get();clearTimeout(timer);
+    const loc=lsGet();
+    if(snap.exists){const r=snap.data();const nr=Object.keys(r.st||{}).length,nl=Object.keys((loc&&loc.st)||{}).length;merge(nl>nr?loc:r);if(nl>nr)save()}
+    else if(loc){merge(loc);save()}
+    $('sync').textContent='Progression synchronisée avec ton compte';renderHome();
+  }catch(e){clearTimeout(timer);fallback('Progression gardée dans ce navigateur')}
+}
+
+/* ---------- état d'une question ---------- */
+const stOf=id=>S.st[id];
+function cat(id){const s=stOf(id);if(!s)return 'new';if(s.b>=4)return 'ok';if(s.l<1)return 'ko';return 'mid'}
+function record(q,res,daily){ // res: 1 juste, 0 faux, -1 abstention
+  const t=today();const isNew=!S.st[q.id];const s=S.st[q.id]||{b:0,d:t,n:0,c:0,l:0};
+  s.n++;if(res===1){s.c++;s.b=Math.min(s.b+1,5)}else s.b=0;
+  s.l=res;s.d=t+INT[s.b];s.t=t;S.st[q.id]=s;
+  if(q.t)(TWINS[q.t]||[]).forEach(id=>{if(id!==q.id)S.st[id]=Object.assign({},s)});
+  const L=S.log[t]||(S.log[t]=[0,0,0]);L[0]++;if(res===1)L[1]++;if(daily&&isNew)L[2]=(L[2]||0)+1;
+  save();
+}
+function dueList(){const t=today();return Q.filter(q=>{const s=stOf(q.id);return s&&s.d<=t}).sort((a,b)=>S.st[a.id].d-S.st[b.id].d)}
+function newToday(){const L=S.log[today()];return (L&&L[2])||0}
+function newList(k){ // tirage équilibré entre matières, au prorata du concours
+  const pools={};SECS.forEach(c=>pools[c]=shuffle(Q.filter(q=>q.s===c&&!stOf(q.id))));
+  const w={jur:.38,fin:.16,ue:.15,num:.15,edu:.16};const out=[];
+  while(out.length<k&&SECS.some(c=>pools[c].length)){const r=Math.random();let acc=0,pick=SECS[0];for(const c of SECS){acc+=w[c];if(r<=acc){pick=c;break}}
+    const p=pools[pick].length?pools[pick]:pools[SECS.find(c=>pools[c].length)];out.push(p.pop())}
+  return out}
+
+/* ---------- accueil ---------- */
+function streak(){let t=today(),n=0;if(!S.log[t])t--;while(S.log[t]){n++;t--}return n}
+function renderHome(){
+  if(!Q.length)return;
+  const due=dueList().length,nw=Math.max(0,S.cfg.nw-newToday()),nwAvail=Q.filter(q=>!stOf(q.id)).length,nn=Math.min(nw,nwAvail);
+  $('dueBig').innerHTML=(due+nn)+'<small>questions</small>';
+  $('dueTxt').textContent=due+nn?`${due} à revoir aujourd'hui et ${nn} nouvelle${nn>1?'s':''}.`:'Séance du jour terminée. Tu peux continuer avec un entraînement ciblé ou un examen blanc.';
+  $('goDaily').disabled=!(due+nn);
+  const sk=streak();$('streak').textContent=sk?`${sk} jour${sk>1?'s':''} d'affilée`:'';
+  const cnt=c=>Q.filter(q=>cat(q.id)===c).length;
+  const k={ok:cnt('ok'),mid:cnt('mid'),ko:cnt('ko'),new:cnt('new')};
+  const pct=v=>(100*v/Q.length).toFixed(2)+'%';
+  $('gBar').innerHTML=`<i style="width:${pct(k.ok)};background:var(--ok)"></i><i style="width:${pct(k.mid)};background:var(--blue)"></i><i style="width:${pct(k.ko)};background:var(--red)"></i>`;
+  $('gTxt').textContent=`${k.ok} maîtrisées sur ${Q.length} · ${Q.length-k.new} déjà vues · ${k.ko} à reprendre`;
+  const errs=uniq(Q.filter(q=>cat(q.id)==='ko')).length;$('errTxt').textContent=errs?`${errs} question${errs>1?'s':''} ratée${errs>1?'s':''} à reprendre.`:'Rien à reprendre pour l\'instant.';
+  $('mErr').disabled=!errs;
+  if(S.cfg.date){const d=Math.ceil((new Date(S.cfg.date+'T12:00')-new Date())/864e5);
+    $('countdown').textContent=d>0?`Épreuve dans ${d} jour${d>1?'s':''}. À ce rythme, il te faut environ ${Math.ceil(k.new/Math.max(d,1))} nouvelles questions par jour pour avoir tout vu.`:'';}else $('countdown').textContent='Indique la date de ton épreuve dans les réglages pour voir le compte à rebours.';
+  $('secRows').innerHTML=SECS.map(c=>{const qs=Q.filter(q=>q.s===c);const o=qs.filter(q=>cat(q.id)==='ok').length,m=qs.filter(q=>cat(q.id)==='mid').length,ko=qs.filter(q=>cat(q.id)==='ko').length;
+    const n=qs.filter(q=>stOf(q.id));const acc=n.length?Math.round(100*n.reduce((a,q)=>a+S.st[q.id].c,0)/n.reduce((a,q)=>a+S.st[q.id].n,0)):null;const p=v=>(100*v/qs.length).toFixed(2)+'%';
+    return `<div class="secrow"><span>${SEC[c]}<br><span class="sub">${o}/${qs.length} maîtrisées</span></span><div class="bar"><i style="width:${p(o)};background:var(--ok)"></i><i style="width:${p(m)};background:var(--blue)"></i><i style="width:${p(ko)};background:var(--red)"></i></div><span class="n">${acc===null?'-':acc+' %'}</span></div>`}).join('')+'<p class="note">Pourcentage à droite : taux de bonnes réponses sur toutes tes tentatives.</p>';
+  const t=today(),ds=[...Array(14)].map((_,i)=>S.log[t-13+i]||[0,0]),mx=Math.max(10,...ds.map(d=>d[0]));
+  $('days').innerHTML=ds.map(d=>`<div class="${d[0]?'':'z'}" style="height:${Math.max(3,100*d[0]/mx)}%" title="${d[0]} questions, ${d[1]} justes"></div>`).join('');
+  const tot=ds.reduce((a,d)=>a+d[0],0),ok=ds.reduce((a,d)=>a+d[1],0);$('daysTxt').textContent=tot?`${tot} questions sur 14 jours, ${Math.round(100*ok/tot)} % de bonnes réponses.`:'Pas encore d\'activité.';
+  $('exHist').innerHTML=S.ex.length?'<table><tr><th>Date</th><th>Sujet</th><th class="n">Note /20</th></tr>'+S.ex.slice(-8).reverse().map(e=>`<tr><td>${new Date(e.at).toLocaleDateString('fr-FR')}</td><td>${esc(e.lab)}</td><td class="n">${e.n20.toFixed(1).replace('.',',')}</td></tr>`).join('')+'</table>':'Aucun pour l\'instant.';
+  {const t=today();const last=Q.filter(q=>{const x=stOf(q.id);return x&&x.t>=t-30});
+   const notions=new Set(Q.map(gk)).size,okN=new Set(Q.filter(q=>cat(q.id)==='ok').map(gk)).size;
+   const lastEx=S.ex[S.ex.length-1];
+   $('goalTxt').innerHTML=`Au QCM, 20/20 veut dire zéro erreur et zéro abstention : chaque erreur coûte 1,5 point, chaque blanc 1 point. Tu maîtrises <b>${okN} notions sur ${notions}</b>.`;
+   const items=[];
+   if(lastEx)items.push(`Dernier examen blanc : ${lastEx.n20.toFixed(1).replace('.',',')}/20, soit ${(1.5*lastEx.ko+lastEx.ab).toString().replace('.',',')} points perdus (${lastEx.ko} erreurs, ${lastEx.ab} blancs).`);
+   const wk=SECS.map(c=>({c,n:Q.filter(q=>q.s===c&&cat(q.id)==='ko').length})).sort((a,b)=>b.n-a.n)[0];
+   if(wk&&wk.n)items.push(`Matière qui te coûte le plus en ce moment : ${SEC[wk.c].toLowerCase()} (${wk.n} question${wk.n>1?'s':''} à reprendre).`);
+   items.push(S.best?`Record de série sans faute : ${S.best} bonnes réponses d'affilée. Le jour J, il en faut 108.`:'Lance une série sans faute pour mesurer ta régularité : le jour J, il en faut 108 d\'affilée.');
+   $('goalList').innerHTML=items.map(x=>`<li>${x}</li>`).join('');
+   $('sfTxt').textContent=S.best?`Record : ${S.best} d'affilée. La série s'arrête à la première erreur.`:'Le plus de bonnes réponses d\'affilée : la série s\'arrête à la première erreur.';}
+  {const lb=S.cfg.lastBk||0,dd=Math.floor((Date.now()-lb)/864e5);const any=Object.keys(S.st).length;
+   $('bkWarn').textContent=any&&dd>=7?(lb?`Dernière sauvegarde il y a ${dd} jours. Pense à en refaire une (Réglages et sauvegarde) : si les données du navigateur sont effacées, la progression part avec.`:`Pense à faire une première sauvegarde de ta progression (Réglages et sauvegarde).`):'';
+   $('bkNote').textContent=lb?'Dernière sauvegarde : '+new Date(lb).toLocaleDateString('fr-FR'):'Aucune sauvegarde fichier pour l\'instant.';}
+  $('sNew').value=String(S.cfg.nw);$('sDate').value=S.cfg.date||'';
+  show('vHome');
+}
+function show(v){['vHome','vQuiz','vRes'].forEach(x=>$(x).classList.toggle('hide',x!==v));window.scrollTo(0,0)}
+
+/* ---------- ciblé ---------- */
+const tSel={s:new Set(SECS),y:new Set()};
+function chips(el,items,set,lab){el.innerHTML=items.map(i=>`<button class="chip" data-k="${i}" aria-pressed="${set.has(i)}">${esc(lab(i))}</button>`).join('');
+  el.onclick=e=>{const b=e.target.closest('.chip');if(!b)return;const k=b.dataset.k;set.has(k)?set.delete(k):set.add(k);b.setAttribute('aria-pressed',set.has(k));tCount()}}
+function tPool(){const f=$('tFilter').value;return Q.filter(q=>tSel.s.has(q.s)&&tSel.y.has(q.y)&&(f==='all'||(f==='new'&&!stOf(q.id))||(f==='weak'&&stOf(q.id)&&(S.st[q.id].b<2))||(f==='flag'&&S.flag[q.id])))}
+function tCount(){const n=tPool().length;$('tCount').textContent=n+' question'+(n>1?'s':'')+' disponibles';$('goTarget').disabled=!n}
+
+/* ---------- moteur de séance ---------- */
+let R=null; // {mode,list,i,ans:[],reinj:Set,label,start,limit}
+function start(mode,list,label,limit){
+  if(!list.length){toast('Aucune question à proposer');return}
+  R={mode,list,i:0,ans:list.map(()=>undefined),reinj:new Map(),label,start:Date.now(),limit:limit||0};
+  $('qNav').classList.toggle('hide',mode!=='exam');$('qSubmit').classList.toggle('hide',mode!=='exam');$('qPrev').classList.toggle('hide',mode!=='exam');
+  show('vQuiz');draw();tick();
+}
+function draw(){
+  const q=R.list[R.i],a=R.ans[R.i],exam=R.mode==='exam',done=!exam&&a!==undefined;
+  $('qMeta').textContent=`${src(q)} · ${SEC[q.s]}`;
+  $('qPos').textContent=`${R.i+1} / ${R.list.length}`;
+  $('qProg').style.width=(100*(R.i+(done?1:0))/R.list.length)+'%';
+  $('qText').textContent=q.q;
+  $('qOpts').innerHTML=q.o.map((o,k)=>{let c='';if(exam){if(a===k)c='pick'}else if(done){if(k===q.a)c='good';if(a===k)c+=' pick'+(k!==q.a?' bad':'')}
+    const box=done&&k===q.a?'<svg viewBox="0 0 40 36" aria-hidden="true"><rect x="2" y="2" width="36" height="32" rx="5"/></svg>':'';
+    return `<button class="opt ${c}" data-k="${k}" ${done?'disabled':''} aria-label="Réponse ${L4[k]}"><span class="l">${box}${L4[k]}.</span><span class="t">${esc(o)}</span></button>`}).join('');
+  $('qVerdict').innerHTML=(done?(a===q.a?'<p class="verdict ok">Bonne réponse.</p>':`<p class="verdict ko">${a===-1?'Passée':'Raté'} : la bonne réponse est ${L4[q.a]}.</p>`)+(q.x?`<p class="note" style="font-size:15px;color:var(--ink)">${esc(q.x)}</p>`:''):'')+(R.mode==='sf'?`<p class="note">Série en cours : ${R.ans.filter((x,k)=>x!==undefined&&x===R.list[k].a).length} · record : ${S.best}</p>`:'');
+  $('qSkip').disabled=done;$('qSkip').textContent=exam&&a===-1?'Abstention notée':'Je ne sais pas';
+  $('qNext').textContent=exam?(R.i===R.list.length-1?'Dernière':'Suivante'):(done?(R.i===R.list.length-1||R.sfEnd?'Voir le résultat':'Suivante'):'Passer');
+  $('qNext').disabled=exam&&R.i===R.list.length-1;$('qPrev').disabled=R.i===0;
+  const fl=!!S.flag[q.id];$('qFlag').setAttribute('aria-pressed',fl);$('qFlag').textContent=fl?'Marquée':'Marquer';
+  if(exam)$('qNav').innerHTML=R.list.map((_,k)=>`<button data-k="${k}" class="${R.ans[k]!==undefined&&R.ans[k]!==-1?'a':''} ${k===R.i?'cur':''}">${k+1}</button>`).join('');
+}
+function answer(k){
+  if(!R)return;const q=R.list[R.i];
+  if(R.mode==='exam'){R.ans[R.i]=R.ans[R.i]===k&&k!==-1?undefined:k;draw();return}
+  if(R.ans[R.i]!==undefined)return;
+  R.ans[R.i]=k;const res=k===q.a?1:(k===-1?-1:0);record(q,res,R.mode==='daily');
+  if(R.mode==='sf'&&res!==1){R.sfEnd=true}
+  else if(res!==1&&R.mode!=='target'){const n=R.reinj.get(q.id)||0;if(n<3){R.reinj.set(q.id,n+1);const pos=Math.min(R.list.length,R.i+5);R.list.splice(pos,0,q);R.ans.splice(pos,0,undefined)}}
+  draw();
+}
+function next(){
+  if(!R)return;
+  if(R.mode==='exam'){if(R.i<R.list.length-1){R.i++;draw()}return}
+  if(R.ans[R.i]===undefined){answer(-1);return}
+  if(R.mode==='sf'&&R.sfEnd){finish();return}
+  if(R.i<R.list.length-1){R.i++;draw();window.scrollTo(0,0)}else finish();
+}
+function tick(){if(!R||$('vQuiz').classList.contains('hide'))return;
+  const el=Math.floor((Date.now()-R.start)/1000);
+  if(R.limit){const left=R.limit-el;if(left<=0){finish();return}$('qTimer').textContent=fmt(left)+' restantes';$('qTimer').style.color=left<600?'var(--red)':''}
+  else $('qTimer').textContent=fmt(el);}
+setInterval(tick,1000);
+const fmt=s=>{const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;return (h?h+' h ':'')+String(m).padStart(h?2:1,'0')+' min '+String(x).padStart(2,'0')+' s'};
+
+function finish(){
+  const r=R;R=null;if(!r)return;
+  const exam=r.mode==='exam';
+  if(exam)r.list.forEach((q,k)=>{const a=r.ans[k];if(a===undefined){r.ans[k]=-1;return}record(q,a===-1?-1:(a===q.a?1:0))});
+  // une ligne par question (première tentative)
+  const seen=new Map();r.list.forEach((q,k)=>{if(!seen.has(q.id))seen.set(q.id,{q,a:r.ans[k]})});
+  const rows=[...seen.values()].filter(x=>x.a!==undefined);
+  const ok=rows.filter(x=>x.a===x.q.a).length,ab=rows.filter(x=>x.a===-1).length,ko=rows.length-ok-ab;
+  const pts=ok-0.5*ko,n20=Math.max(0,20*pts/rows.length);
+  $('rTitle').textContent=exam?`Examen blanc : ${r.label}`:r.label;
+  $('rStats').innerHTML=(exam?`<div><b>${n20.toFixed(1).replace('.',',')}</b><span>note sur 20 (barème officiel)</span></div><div><b>${pts.toString().replace('.',',')}</b><span>points sur ${rows.length}</span></div>`:`<div><b>${rows.length?Math.round(100*ok/rows.length):0} %</b><span>de bonnes réponses</span></div><div><b>${rows.length}</b><span>questions</span></div>`)+`<div><b>${ok}</b><span>justes</span></div><div><b>${ko+ab}</b><span>fausses ou passées${ab?` (dont ${ab} passée${ab>1?'s':''})`:''}</span></div>`;
+  $('rSecs').innerHTML=SECS.map(c=>{const x=rows.filter(y=>y.q.s===c);if(!x.length)return '';const o=x.filter(y=>y.a===y.q.a).length;return `<div class="secrow"><span>${SEC[c]}</span><div class="bar"><i style="width:${100*o/x.length}%;background:var(--ok)"></i></div><span class="n">${o} / ${x.length}</span></div>`}).join('');
+  if(exam){S.ex.push({at:Date.now(),lab:r.label,n20,ok,ko,ab,n:rows.length});save()}
+  let extra='';
+  if(r.mode==='sf'){const rec=ok>S.best;if(rec){S.best=ok;save()}extra=`<p class="verdict ${rec?'ok':''}">${ok} bonne${ok>1?'s':''} réponse${ok>1?'s':''} d'affilée${rec?' : nouveau record !':` (record : ${S.best})`}</p>`}
+  if(exam)extra=ko+ab?`<p>Il te manque <b>${(1.5*ko+ab).toString().replace('.',',')} points</b> pour le 20/20 : ${ko} erreur${ko>1?'s':''} (1,5 point chacune : le point non gagné plus la pénalité) et ${ab} abstention${ab>1?'s':''} (1 point chacune). Quand tu hésites vraiment entre deux réponses, l'abstention coûte moins cher qu'une erreur.</p>`:'<p class="verdict ok">Sans faute : 20/20.</p>';
+  $('rSecs').insertAdjacentHTML('beforebegin','');
+  const errs=rows.filter(x=>x.a!==x.q.a);
+  $('rSecs').insertAdjacentHTML('afterbegin',extra);
+  $('rList').innerHTML=errs.length?errs.map(x=>`<div class="rev"><p class="sub">${esc(src(x.q))} · ${SEC[x.q.s]}</p><p>${esc(x.q.q)}</p><p class="c">${L4[x.q.a]}. ${esc(x.q.o[x.q.a])}</p>${x.a>=0?`<p class="y">Ta réponse : ${L4[x.a]}. ${esc(x.q.o[x.a])}</p>`:'<p class="sub">Passée</p>'}${x.q.x?`<p class="sub">${esc(x.q.x)}</p>`:''}</div>`).join(''):'<p>Aucune erreur. Bravo.</p>';
+  $('rRedo').disabled=!errs.length;$('rRedo').onclick=()=>start('target',uniq(shuffle(errs.map(x=>x.q))),'Reprise des erreurs');
+  show('vRes');flush();
+}
+
+/* ---------- événements ---------- */
+$('goDaily').onclick=()=>{const seen=new Set(),due=uniq(dueList(),seen),nw=uniq(newList(Math.max(0,S.cfg.nw-newToday())+10),seen).slice(0,Math.max(0,S.cfg.nw-newToday()));start('daily',shuffle(due).concat(shuffle(nw)),'Séance du jour')};
+$('mTarget').onclick=()=>{$('cfgExam').hidden=true;$('cfgTarget').hidden=!$('cfgTarget').hidden;tCount()};
+$('mExam').onclick=()=>{$('cfgTarget').hidden=true;$('cfgExam').hidden=!$('cfgExam').hidden};
+$('mErr').onclick=()=>start('errors',uniq(shuffle(Q.filter(q=>cat(q.id)==='ko'))),'Mes erreurs');
+$('mSf').onclick=()=>{const seenQ=Q.filter(q=>stOf(q.id));start('sf',uniq(shuffle(seenQ.length>=30?seenQ:Q.slice())),'Série sans faute')};
+$('tFilter').onchange=tCount;
+$('goTarget').onclick=()=>{const p=uniq(shuffle(tPool()));start('target',p.slice(0,+$('tN').value),'Entraînement ciblé')};
+$('goExam').onclick=()=>{const v=$('eSrc').value;let list,lab;
+  if(v==='mix'){const n={jur:49,fin:20,ue:20,num:19};list=[];const seen=new Set();SECS.forEach(c=>list.push(...uniq(shuffle(Q.filter(q=>q.s===c)),seen).slice(0,n[c]||0)));lab='sujet mixte'}
+  else if(v==='edu'){list=uniq(shuffle(Q.filter(q=>q.s==='edu'))).slice(0,40);lab='système éducatif'}
+  else{list=Q.filter(q=>q.y===v);lab='annale '+v}
+  start('exam',list,lab,v==='edu'?30*60:90*60)};
+$('qOpts').onclick=e=>{const b=e.target.closest('.opt');if(b&&!b.disabled)answer(+b.dataset.k)};
+$('qSkip').onclick=()=>answer(-1);
+$('qNext').onclick=next;
+$('qPrev').onclick=()=>{if(R&&R.i>0){R.i--;draw()}};
+$('qNav').onclick=e=>{const b=e.target.closest('button');if(b&&R){R.i=+b.dataset.k;draw()}};
+$('qFlag').onclick=()=>{if(!R)return;const id=R.list[R.i].id;if(S.flag[id])delete S.flag[id];else S.flag[id]=1;save();draw()};
+let quitArm=0;
+$('qQuit').onclick=()=>{if(R&&R.mode==='exam'&&Date.now()-quitArm>3000){quitArm=Date.now();toast('Clique encore pour abandonner l\'examen (non noté)');return}
+  const r=R;R=null;if(r&&r.mode!=='exam'&&r.ans.some(a=>a!==undefined)){R=r;finish()}else{flush();renderHome()}};
+let subArm=0;
+$('qSubmit').onclick=()=>{const left=R.ans.filter(a=>a===undefined).length;if(left&&Date.now()-subArm>3000){subArm=Date.now();toast(`${left} sans réponse (comptées en abstention). Clique encore pour rendre.`);return}finish()};
+$('rHome').onclick=renderHome;
+document.addEventListener('keydown',e=>{if($('vQuiz').classList.contains('hide')||e.target.closest('input,select,textarea')||e.metaKey||e.ctrlKey||e.altKey)return;
+  const k=e.key.toLowerCase(),m={a:0,b:1,c:2,d:3,'1':0,'2':1,'3':2,'4':3};
+  if(k in m){if(R&&m[k]<R.list[R.i].o.length)answer(m[k]);e.preventDefault()}else if(k==='0'||k==='?'){answer(-1)}else if(k==='enter'){next();e.preventDefault()}
+  else if(k==='arrowleft'&&R&&R.mode==='exam'&&R.i>0){R.i--;draw()}else if(k==='arrowright'&&R&&R.mode==='exam'){next()}});
+$('sNew').onchange=()=>{S.cfg.nw=+$('sNew').value;save();renderHome()};
+$('sDate').onchange=()=>{S.cfg.date=$('sDate').value;save();renderHome()};
+$('bkCopy').onclick=async()=>{const s=JSON.stringify(S);$('bk').value=s;try{await navigator.clipboard.writeText(s);toast('Progression copiée')}catch(e){$('bk').select();toast('Sélectionnée : copie-la avec Ctrl+C')}};
+$('bkFile').onclick=()=>{S.cfg.lastBk=Date.now();save();const b=new Blob([JSON.stringify(S)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='qcm-ira-sauvegarde-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),2000);renderHome();toast('Sauvegarde enregistrée dans tes téléchargements')};
+$('bkIn').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(t=>{const x=JSON.parse(t);if(!x.st)throw 0;merge(x);save();renderHome();toast('Progression restaurée')}).catch(()=>toast('Ce fichier n\'est pas une sauvegarde valide'));e.target.value=''};
+$('bkImp').onclick=()=>{try{const x=JSON.parse($('bk').value);if(!x.st)throw 0;merge(x);save();flush();renderHome();toast('Progression importée')}catch(e){toast('Ce texte n\'est pas une sauvegarde valide')}};
+let rsArm=0;$('bkReset').onclick=()=>{if(Date.now()-rsArm>3000){rsArm=Date.now();toast('Clique encore pour tout effacer');return}S={st:{},log:{},ex:[],flag:{},best:0,cfg:S.cfg};save();flush();renderHome();toast('Progression remise à zéro')};
+
+/* ---------- chargement ---------- */
+Promise.resolve(window.QUESTIONS||[]).then(d=>{if(!d.length)throw 0;
+  const ok=q=>q&&typeof q.id==='string'&&typeof q.q==='string'&&Array.isArray(q.o)&&q.o.length>=2&&q.o.length<=4&&Number.isInteger(q.a)&&q.a>=0&&q.a<q.o.length&&SEC[q.s]&&typeof q.y==='string';
+  const ids=new Set(),bad=[];Q=[];d.forEach((q,i)=>{if(!ok(q)||ids.has(q.id)){bad.push(q&&q.id?q.id:'n° '+(i+1));return}ids.add(q.id);Q.push(q)});
+  Q.forEach(q=>{BY[q.id]=q;if(q.t)(TWINS[q.t]=TWINS[q.t]||[]).push(q.id)});YEARS=[...new Set(Q.map(q=>q.y))].sort((a,b)=>{const f=x=>x.startsWith('Fiche')?1000+parseInt(x.slice(6)):0;return f(a)-f(b)||a.localeCompare(b)});tSel.y=new Set(YEARS);
+  {const an=YEARS.filter(y=>!y.startsWith('Fiche'));$('bankinfo').textContent=`${Q.length} questions corrigées : ${an.length} annales (${an[0]} à ${an[an.length-1]}) et ${Q.filter(q=>q.s==='edu').length} sur le système éducatif · ${new Set(Q.map(gk)).size} notions distinctes`;}
+  chips($('tSec'),SECS,tSel.s,c=>SEC[c]);chips($('tYear'),YEARS,tSel.y,y=>y);
+  $('eSrc').innerHTML='<option value="mix">Sujet mixte (108 questions)</option><option value="edu">Système éducatif (40 questions, 30 min)</option>'+YEARS.filter(y=>!y.startsWith('Fiche')).slice().reverse().map(y=>`<option value="${y}">Annale ${y} (${Q.filter(q=>q.y===y).length} questions)</option>`).join('');
+  const l=lsGet();if(l)merge(l);
+  renderHome();initDb();
+  if(bad.length){$('bankinfo').textContent+=` · ${bad.length} question${bad.length>1?'s':''} mal formée${bad.length>1?'s':''} ignorée${bad.length>1?'s':''} : ${bad.slice(0,5).join(', ')}${bad.length>5?'…':''}`}
+}).catch(()=>{$('bankinfo').textContent='Impossible de charger les questions : vérifie que questions.js est dans le même dossier que index.html.'});
+}
+</script>
+</body>
+</html>
